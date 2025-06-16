@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+
+ex00/data.csv
+
+.vscode
