@@ -1,24 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   BitcoinExchange.hpp                                :+:    :+:            */
+/*   RPN.hpp                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/18 15:45:27 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/18 20:11:02 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BITCOIN_EXCHANGE_HPP
-# define BITCOIN_EXCHANGE_HPP
+#ifndef RPN_HPP
+# define RPN_HPP
 
-# include <algorithm>
+# include <iostream>
+# include <stack>
+# include <sstream>
 
 
-template<class T, class Container = std::list<T>
-> class stack;
+// template<class T, class Container = std::list<T>
+// > class stack;
 
+class PN {
+private:
+	std::stack<int>	stack;
+public:
+	PN() = default;
+	~PN() = default;
+	PN(const PN &other) = default;
+	PN &operator=(const PN &other) = default;
+
+	// Member functions
+	void stackInput(const std::string &expression);
+	std::string &calculateOutput();
+};
+
+	// // Exception Classes
+	// class SpanFullException : public std::exception {
+	// public:
+	// 	const char *what() const throw();
+	// };
 
 # define RESET          "\033[0m"
 # define BLACK          "\033[30m"
@@ -46,4 +67,4 @@ template<class T, class Container = std::list<T>
 # define BOLD           "\033[1m"
 # define UNDERLINE      "\033[4m"
 
-#endif // BITCOIN_EXCHANGE_HPP
+#endif // RPN_HPP
