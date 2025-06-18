@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/18 17:59:34 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/18 15:45:27 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,10 @@
 # define BITCOIN_EXCHANGE_HPP
 
 # include <algorithm>
-# include <iostream>
-# include <map>
-# include <string>
-# include <fstream>
-# include <sstream>
-# include <exception>
-# include <ctime>
-# include <regex>
-# include <iomanip>
 
-class BitcoinExchange {
-private:
-	std::map<std::string, double> data;
-public:
-	// Constructor and destructor
-	BitcoinExchange() = default;
-	~BitcoinExchange() = default;
-	BitcoinExchange(const BitcoinExchange &other) = default;
-	BitcoinExchange &operator=(const BitcoinExchange &other) = default;
 
-	//Member functions
-	void processData(const std::string &filename);
-	void translateExchange(const std::string &filename);
-	// Exception handling
-	class OpenFileException : public std::exception {
-	public:
-		const char *what() const throw();
-	};
-};
+template<class T, class Container = std::list<T>
+> class stack;
 
 
 # define RESET          "\033[0m"
