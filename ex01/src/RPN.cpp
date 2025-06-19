@@ -34,7 +34,6 @@ int &RPN::RPNcalculation(const std::string &input) {
 	std::stringstream iss(input);
 	std::string token;
 	while (iss >> token) {
-		// std::cout << "Token: " << token << std::endl;
 		if (isValidDigit(token)) {
 			stack.push(std::stoi(token));
 		} else if (token == "+") {
@@ -73,7 +72,6 @@ int &RPN::RPNcalculation(const std::string &input) {
 			if (miltiplyOverfowCheck(a, b))
 				throw intOverflow();
 			stack.push((b * a));
-			// std::cout << a * b << std::endl;
 		}
 		else if (token == "/") {
 			if (stack.size() < 2)
