@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/18 20:11:02 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/19 18:06:42 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,41 @@
 # include <iostream>
 # include <stack>
 # include <sstream>
+# include <string>
+# include <limits>
 
 
 // template<class T, class Container = std::list<T>
 // > class stack;
 
-class PN {
+class RPN {
 private:
 	std::stack<int>	stack;
+	bool isValidDigit(const std::string &token);
 public:
-	PN() = default;
-	~PN() = default;
-	PN(const PN &other) = default;
-	PN &operator=(const PN &other) = default;
+	RPN() = default;
+	~RPN() = default;
+	RPN(const RPN &other) = default;
+	RPN &operator=(const RPN &other) = default;
 
 	// Member functions
-	void stackInput(const std::string &expression);
-	std::string &calculateOutput();
+	int &RPNcalculation(const std::string &input);
+
+	// Exception Classes
+	class invalidInput : public std::exception {
+	public:
+		const char *what() const throw();
+	};
+	class intOverflow : public std::exception {
+	public:
+		const char *what() const throw();
+	};
+	class divisionByZero : public std::exception {
+	public:
+		const char *what() const throw();
+	};
 };
 
-	// // Exception Classes
-	// class SpanFullException : public std::exception {
-	// public:
-	// 	const char *what() const throw();
-	// };
 
 # define RESET          "\033[0m"
 # define BLACK          "\033[30m"
