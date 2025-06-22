@@ -6,13 +6,16 @@
 /*   By: crasche <crasche@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/07 16:36:52 by crasche       #+#    #+#                 */
-/*   Updated: 2025/06/21 16:09:11 by christian.r   ########   odam.nl         */
+/*   Updated: 2025/06/22 16:18:30 by christian.r   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/PmergeMe.hpp"
 
 #include <chrono>
+
+size_t comparison = 0;
+// size_t reglevel = 0;
 
 int main(int argc, char **argv)
 {
@@ -36,28 +39,32 @@ int main(int argc, char **argv)
 			return (1);
 		}
 	}
-	pmergeMe.sortContainer(pmergeMe.getVector());
+	pmergeMe.sortFJMergeInsertion(pmergeMe.getVector());
+	std::cout << "Number of comparisons: " << comparison << std::endl;
+	comparison = 0; // Reset comparison count for deque sorting
 	auto endV = std::chrono::high_resolution_clock::now();
 
 	// Deque sorting
 	auto startL = std::chrono::high_resolution_clock::now();
-	for (int i = 1; i < argc; ++i) {
-		std::string value(argv[i]);
-		if (!pmergeMe.fillContainer(pmergeMe.getDeque(), value)) {
-			std::cerr << RED << BOLD << "Error: Invalid input." << RESET << std::endl;
-			return (1);
-		}
-	}
-	pmergeMe.sortContainer(pmergeMe.getDeque());
+	// for (int i = 1; i < argc; ++i) {
+	// 	std::string value(argv[i]);
+	// 	if (!pmergeMe.fillContainer(pmergeMe.getDeque(), value)) {
+	// 		std::cerr << RED << BOLD << "Error: Invalid input." << RESET << std::endl;
+	// 		return (1);
+	// 	}
+	// }
+	// pmergeMe.sortFJMergeInsertion(pmergeMe.getDeque());
+	// std::cout << "Number of comparisons: " << comparison << std::endl;
+	// comparison = 0; // Reset comparison count
 	auto endL = std::chrono::high_resolution_clock::now();
 
 
 
 	// Prints after sorting
-	std::cout << "After: ";		pmergeMe.printContainer(pmergeMe.getVector());
+	std::cout << "After: ";		printContainer(pmergeMe.getVector());	std::cout << std::endl;
 	std::cout << "Time to process a range of " << pmergeMe.getVector().size() << " elements with std::vector:\t"
 			  << std::chrono::duration_cast<std::chrono::microseconds>(endV - startV).count() << " us" << std::endl;
-	std::cout << "Time to process a range of " << pmergeMe.getDeque().size() << " elements with std::deque:\t"
+	std::cout << "Time to process a range of " << pmergeMe.getDeque().size() << " elements with std::deque:  \t"
 			  << std::chrono::duration_cast<std::chrono::microseconds>(endL - startL).count() << " us" << std::endl;
 
 	return (0);
