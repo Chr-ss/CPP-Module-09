@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/23 16:55:51 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/23 21:06:10 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,49 +219,43 @@ public:
 		return (true);
 	}
 
-
-
 	template <typename Container>
 	void sortFJMergeInsertion(Container &container) {
 		_regLevel++;
 		size_t size = container.size();
+		// size_t group_size = 2;
 		if (size < 2)
 			return;
+		// if (_regLevel > 1)
 		size_t group_size = 1 * pow(2, _regLevel);
+		std::cout << BRIGHT_MAGENTA << "group_size: " << group_size << RESET << std::endl;
 		// Container splits;
 		// Container rest;
 		// // Split the container into groups of size group_size and fill splits with them
 
 		Container temp(container.begin(), container.end());
 		auto itTemp = container.begin() + (group_size - 1);
-		while (itTemp != container.end()) {
-			if (itTemp >= container.end())
-				break;
-			std::cout << BRIGHT_MAGENTA << *(itTemp - (group_size - 1)) << " : " << *itTemp << RESET << std::endl;
+		while (itTemp < container.end()) {
+			std::cout << BRIGHT_MAGENTA << *(itTemp - (group_size / 2)) << " : " << *itTemp << RESET << std::endl;
 			comparison++;
-			if (*(itTemp - (group_size - 1)) > *itTemp) {
-				// Container a(itTemp - ((group_size - 1) * 2), itTemp - (group_size - 1));
-				// Container b(itTemp - (group_size - 1), itTemp);
-				// for (int i = 0; i < group_size; ++i) {
-				// 	if (i < a.size() && i < b.size()) {
-				// 		comparison++;
-				// 		std::cout << BRIGHT_MAGENTA;
-				// 		printContainer(a);
-				// 		std::cout << BRIGHT_BLUE << BOLD << "   | " << b[i] << RESET << " : ";
-				// 		std::cout << BRIGHT_GREEN << BOLD << a[i] << " |   " << RESET << BRIGHT_RED ;
-				// 		printContainer(b);
-				// 		std::cout << RESET << std::endl;
-				// 	}
-				// }
-			itTemp = itTemp + group_size;
+			if (*(itTemp - (group_size / 2)) > *itTemp) {
+				for (size_t i = 0; i < (group_size / 2); i++) {
+					size_t tempValue = *((itTemp - (group_size / 2)) - i);
+					std::cout << BRIGHT_MAGENTA << "Swapping: " << tempValue << " with " << *(itTemp - i) << RESET << std::endl;
+					*((itTemp - (group_size / 2)) - i) = *(itTemp - i);
+					*(itTemp - i) = tempValue;
+				}
 			}
+			if ((itTemp + group_size) > container.end())
+				break;
+			itTemp = itTemp + group_size;
 		}
-
-
-		// if (group_size < (size / 2)) {
-		// 	sortFJMergeInsertion(container);
-		// }
-		// std::cout << BRIGHT_MAGENTA << "group_size: "<< group_size << RESET << std::endl;
+		std::cout << BRIGHT_MAGENTA << "group_size: "<< group_size << RESET << std::endl;
+		printContainer(container);
+		if (group_size < (size / 2)) {
+			sortFJMergeInsertion(container);
+		}
+		_regLevel--;
 	}
 
 
