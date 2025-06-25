@@ -6,7 +6,7 @@
 /*   By: crasche <crasche@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/07 16:36:52 by crasche       #+#    #+#                 */
-/*   Updated: 2025/06/25 19:43:49 by christian.r   ########   odam.nl         */
+/*   Updated: 2025/06/25 19:47:28 by christian.r   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,6 @@
 #include <cmath>
 #include <vector>
 #include <list>
-
-int F(int n)
-{
-    int sum = 0;
-    for (int k = 1; k <= n; ++k) {
-        double value = (3.0 / 4.0) * k;
-        sum += static_cast<int>(ceil(log2(value)));
-    }
-    return sum;
-}
-
-size_t comparison = 0;
-// size_t reglevel = 0;
 
 int main(int argc, char **argv)
 {
@@ -70,12 +57,6 @@ int main(int argc, char **argv)
 	auto endL = std::chrono::high_resolution_clock::now();
 	// END: List sorting
 
-
-	std::cout << "Number of comparisons: " << comparison << std::endl;
-	std::cout << "Number of comparisons allowed: " << F(argc - 1) << std::endl;
-	std::cout << "Number of ints to sort: " << argc - 1 << std::endl;
-	comparison = 0; // Reset comparison count for deque sorting
-
 	// Prints after sorting
 	if (std::is_sorted(vecPmergeMe.getNbrs().begin(), vecPmergeMe.getNbrs().end()))
 		std::cout << GREEN << BOLD;
@@ -85,17 +66,12 @@ int main(int argc, char **argv)
 	std::cout << "Time to process a range of " << vecPmergeMe.getNbrs().size() << " elements with std::vector:\t"
 			  << std::chrono::duration_cast<std::chrono::microseconds>(endV - startV).count() << " us" << std::endl;
 
-	std::cout << "Number of comparisons: " << comparison << std::endl;
-	std::cout << "Number of comparisons allowed: " << F(argc - 1) << std::endl;
-	std::cout << "Number of ints to sort: " << argc - 1 << std::endl;
-	comparison = 0; // Reset comparison count for deque sorting
-
 	// Prints after sorting
-	if (std::is_sorted(listPmergeMe.getNbrs().begin(), listPmergeMe.getNbrs().end()))
-		std::cout << GREEN << BOLD;
-	else
-		std::cout << RED << BOLD;
-	std::cout << "After: ";		printContainer(listPmergeMe.getNbrs(), false);	std::cout << RESET << std::endl;
+	// if (std::is_sorted(listPmergeMe.getNbrs().begin(), listPmergeMe.getNbrs().end()))
+	// 	std::cout << GREEN << BOLD;
+	// else
+	// 	std::cout << RED << BOLD;
+	// std::cout << "After: ";		printContainer(listPmergeMe.getNbrs(), false);	std::cout << RESET << std::endl;
 	std::cout << "Time to process a range of " << listPmergeMe.getNbrs().size() << " elements with std::vector:\t"
 			  << std::chrono::duration_cast<std::chrono::microseconds>(endL - startL).count() << " us" << std::endl;
 	return (0);

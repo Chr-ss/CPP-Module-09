@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/25 19:43:42 by christian.r   ########   odam.nl         */
+/*   Updated: 2025/06/25 19:48:07 by christian.r   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@
 
 #include <iostream>
 #include <algorithm>
-
-extern size_t comparison;
 
 template <typename Container>
 void sortContainer(Container &container) {
@@ -114,7 +112,6 @@ private:
 		_size = _nbrs.size();
 		auto	it = _nbrs.begin();
 		for (size_t i = 1; i < _size; i += 2) {
-			comparison++;
 			if (*it < *std::next(it))
 				std::swap(*it, *std::next(it));
 			it = std::next(it, 2);
@@ -150,7 +147,6 @@ private:
 		size_t	startRight	= mid + 1;
 
 		while (startLeft <= mid && startRight <= right) {
-			comparison++;
 			if (*itLeft < *itRight) {
 				itLeft = std::next(itLeft, 2);
 				startLeft += 2;
@@ -212,8 +208,6 @@ private:
 			return;
 		}
 		size_t mid = start + (end - start) / 2;
-
-		comparison++;
 		if (*(std::next(_nbrs.begin(), mid)) > *itPend) {
 			binaryInsert(itPend, start, mid);
 		} else {
