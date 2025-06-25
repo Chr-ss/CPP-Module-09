@@ -6,12 +6,11 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/23 21:06:10 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/25 19:43:42 by christian.r   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
 
 # define RESET          "\033[0m"
 # define BLACK          "\033[30m"
@@ -39,18 +38,10 @@
 # define BOLD           "\033[1m"
 # define UNDERLINE      "\033[4m"
 
-# include <algorithm>
-# include <iostream>
-# include <exception>
-# include <string>
-# include <vector>
-# include <deque>
-# include <cmath>
+#include <iostream>
+#include <algorithm>
 
 extern size_t comparison;
-// extern size_t regLevel;
-
-
 
 template <typename Container>
 void sortContainer(Container &container) {
@@ -59,129 +50,19 @@ void sortContainer(Container &container) {
 }
 
 template <typename Container>
-void printContainer(const Container &container) {
+void printContainer(const Container &container, bool limit) {
+	size_t elements = 10;
 	for (const auto &elem : container) {
 		std::cout << elem << " ";
+		if (limit && elements-- == 0) {
+			std::cout << "[...]";
+			return ;
+		}
 	}
 }
 
-#include <algorithm>
-#include <vector>
-
-// Binary insertion into sorted range [begin, begin+len)
-// template<typename Container>
-// void binary_insert(Container &container, int begin, int len, const int &value) {
-// 	int lo = begin, hi = begin + len;
-// 	while (lo < hi) {
-// 		int mid = lo + (hi - lo) / 2;
-// 		if (value < container[mid]) hi = mid;
-// 		else lo = mid + 1;
-// 	}
-// 	container.insert(container.begin() + lo, value);
-// }
-
-// // Recursively sorts A[l..r) using Ford–Johnson algorithm
-// template<typename Container>
-// void ford_johnson(Container &container, int l, int r) {
-// 	int con_size = container.size();
-// 	(void)l; // Suppress unused variable warning
-// 	(void)r; // Suppress unused variable warning
-// 	if (con_size <= 1)
-// 		return;
-
-// 	// int pairs = con_size / 2;
-// 	// Container a;
-// 	// Container b;
-// 	// a.reserve(pairs + (con_size % 2));
-// 	// b.reserve(pairs);
-
-// 	// // Step 1: pairwise compare
-// 	// for (int i = 0; i + 1 < con_size; i += 2) {
-// 	// 	int &x = container[i];
-// 	// 	int &y = container[i + 1];
-// 	// 	comparison++;
-// 	// 	std::cout << BRIGHT_MAGENTA;
-// 	// 	printContainer(a);
-// 	// 	std::cout << BRIGHT_BLUE << BOLD << "   | " << y << RESET << " : ";
-// 	// 	std::cout << BRIGHT_GREEN << BOLD << x << " |   " << RESET << BRIGHT_RED ;
-// 	// 	printContainer(b);
-// 	// 	std::cout << RESET << std::endl;
-// 	// 	if (y < x)
-// 	// 		std::swap(x, y);
-// 	// 	a.push_back(y);
-// 	// 	b.push_back(x);
-// 	// }
-// 	// // If odd length, one extra b value
-// 	// if (con_size % 2) {
-// 	// 	b.push_back(container[l + con_size - 1]);
-// 	// }
-// 	size_t mid = container.size() / 2;
-// 	Container a(container.begin(), container.begin() + mid);
-// 	Container b(container.begin() + mid, container.begin() + mid * 2);
-// 	Container rest(container.begin() + mid * 2, container.end());
-// 	// Step 2: recursively sort the 'a' sequence
-// 	ford_johnson(a, 0, (int)a.size());
-
-// 	// Recompose main sequence in container[l..]
-// 	container[0] = a[0];
-
-// 	// Insert remaining a-values
-// 	int idx = 1;
-// 	for (size_t i = 1; i < a.size(); ++i) {
-// 		container[idx++] = a[i];
-// 	}
-
-
-
-// 	// // Step 3: insert b-values in Jacobsthal order
-// 	int b_size = (int)b.size();
-// 	Container inserted(b_size, false);
-
-// 	// Initialize Jacobsthal numbers
-// 	int JT_1 = 1;
-// 	int JT_2 = 1;
-// 	int JT_buffer;
-// 	int JT_curr = 3;
-// 	while (true) {
-// 		// Calculate next Jacobsthal number
-// 		JT_buffer = JT_curr;
-// 		JT_curr = (JT_1 * 2) + JT_2;
-// 		JT_1 = JT_2;
-// 		JT_2 = JT_buffer;
-
-// 		if (JT_curr > b_size)
-// 			break;
-// 		int i = JT_curr - 1;  // Index of inserted bools is 0-based
-// 		if (inserted[i])
-// 			continue;
-// 		// We insert b[i] into current sorted prefix container[l..idx)
-// 		// int prefix_len = 1 + (i >= 0 && i < (int)a.size() ? i+1 : 0);
-// 		binary_insert(container, l, idx - l, b[i]);
-// 		++idx;
-// 		inserted[i] = true;
-// 	}
-
-// 	// Insert any remaining b’s
-// 	for (int i = 0; i < b_size; ++i) {
-// 		if (!inserted[i]) {
-// 			binary_insert(container, l, idx - l, rest[i]);
-// 			++idx;
-// 		}
-// 	}
-// }
-
-// // Public entry-point
-// template<typename Container>
-// void ford_johnson_sort(Container &c) {
-// 	ford_johnson(c, 0, (int)c.size());
-// }
-
-
+template <typename T>
 class PmergeMe {
-private:
-	size_t				_regLevel = 0;
-	std::vector<int>	_vnbrs;
-	std::deque<int>		_dnbrs;
 public:
 	PmergeMe() = default;
 	PmergeMe(const PmergeMe &other) = default;
@@ -189,13 +70,19 @@ public:
 	~PmergeMe() = default;
 
 	// Getters
-	std::vector<int> &getVector() { return _vnbrs; }
-	std::deque<int> &getDeque() { return _dnbrs; }
+	T &getNbrs() { return _nbrs; }
+
+	// Sorting method
+	void sortFJMergeInsertion() {
+		sortPairOfTwo();
+		mergeSortDevide(0, _size - 1);
+		sortForMainPend();
+		insertPendElements();
+	}
 
 	// Container handling templates
-	template <typename Container>
-	bool fillContainer(Container &container, std::string &value) {
-		for (size_t i = 0; i < value.size(); ++i) {
+	bool fillContainer(std::string &value) {
+		for (size_t i = 0; i < value.size(); i++) {
 			if (!std::isdigit(value[i]) && value[i] != ' ') {
 				std::cerr << "Invalid character in input: \"" << value[i] << "\""<< std::endl;
 				return (false);
@@ -208,7 +95,7 @@ public:
 				return (false);
 			}
 			int intNum = static_cast<int>(num);
-			container.push_back(intNum);
+			_nbrs.push_back(intNum);
 		} catch (const std::invalid_argument &e) {
 			std::cerr << "Invalid number: " << value << std::endl;
 			return (false);
@@ -218,105 +105,145 @@ public:
 		}
 		return (true);
 	}
+private:
+	size_t				_size;
+	T					_nbrs;
 
-	template <typename Container>
-	void sortFJMergeInsertion(Container &container) {
-		_regLevel++;
-		size_t size = container.size();
-		// size_t group_size = 2;
-		if (size < 2)
-			return;
-		// if (_regLevel > 1)
-		size_t group_size = 1 * pow(2, _regLevel);
-		std::cout << BRIGHT_MAGENTA << "group_size: " << group_size << RESET << std::endl;
-		// Container splits;
-		// Container rest;
-		// // Split the container into groups of size group_size and fill splits with them
-
-		Container temp(container.begin(), container.end());
-		auto itTemp = container.begin() + (group_size - 1);
-		while (itTemp < container.end()) {
-			std::cout << BRIGHT_MAGENTA << *(itTemp - (group_size / 2)) << " : " << *itTemp << RESET << std::endl;
+	// Sorting first Pairs, 2 members per Pair only!
+	void sortPairOfTwo() {
+		_size = _nbrs.size();
+		auto	it = _nbrs.begin();
+		for (size_t i = 1; i < _size; i += 2) {
 			comparison++;
-			if (*(itTemp - (group_size / 2)) > *itTemp) {
-				for (size_t i = 0; i < (group_size / 2); i++) {
-					size_t tempValue = *((itTemp - (group_size / 2)) - i);
-					std::cout << BRIGHT_MAGENTA << "Swapping: " << tempValue << " with " << *(itTemp - i) << RESET << std::endl;
-					*((itTemp - (group_size / 2)) - i) = *(itTemp - i);
-					*(itTemp - i) = tempValue;
-				}
-			}
-			if ((itTemp + group_size) > container.end())
-				break;
-			itTemp = itTemp + group_size;
+			if (*it < *std::next(it))
+				std::swap(*it, *std::next(it));
+			it = std::next(it, 2);
 		}
-		std::cout << BRIGHT_MAGENTA << "group_size: "<< group_size << RESET << std::endl;
-		printContainer(container);
-		if (group_size < (size / 2)) {
-			sortFJMergeInsertion(container);
-		}
-		_regLevel--;
 	}
 
+	// Inserts the next two elements into the sorted vector
+	void insertPair(T::iterator &itInsert, T::iterator &itErase) {
+		itErase = std::next(itErase);
+		if (itInsert == itErase)
+			return ;
+		int value = *itErase;
+		std::size_t posIndex = std::distance(_nbrs.begin(), itErase);
+		_nbrs.erase(itErase);
+		itInsert = _nbrs.insert(itInsert, value);
+		itErase = std::next(_nbrs.begin(), posIndex);
 
+		if (itInsert == itErase)
+			return ;
+		value = *itErase;
+		posIndex = std::distance(_nbrs.begin(), itErase);
+		_nbrs.erase(itErase);
+		itInsert = _nbrs.insert(itInsert, value);
+		itErase = std::next(_nbrs.begin(), posIndex);
+		itErase = std::prev(itErase);
+	}
 
+	// Mergesort insert function, merges the two parts of the devided vector
+	void mergeSortInsert(size_t left, size_t mid, size_t right) {
+		auto	itLeft		= std::next(_nbrs.begin(), left);
+		auto	itRight		= std::next(_nbrs.begin(), mid + 1);
+		size_t	startLeft	= left;
+		size_t	startRight	= mid + 1;
 
+		while (startLeft <= mid && startRight <= right) {
+			comparison++;
+			if (*itLeft < *itRight) {
+				itLeft = std::next(itLeft, 2);
+				startLeft += 2;
+			} else {
+				if (startRight != right) {
+					insertPair(itLeft, itRight);
+				}
+				itLeft = std::next(itLeft, 2);
+				itRight = std::next(itRight, 2);
+				startRight += 2;
+			}
+		}
+	}
 
+	// Revursivly divides the vector into smaller parts
+	void mergeSortDevide(size_t left, size_t right) {
+		if (right - 1 <= left)
+			return ;
 
+		size_t mid = (right + left) / 2;
+		mid = mid + (((right - left) / 2 + 1) % 2);
 
-	// template <typename Container>
-	// void sortFJMergeInsertion1(Container &container) {
-	// 	_regLevel++;
-	// 	if (container.size() < 2)
-	// 		return;
+		mergeSortDevide(left, mid);
+		mergeSortDevide(mid + 1, right);
+		mergeSortInsert(left, mid, right);
+	}
 
-	// 	size_t mid = container.size() / 2;
-	// 	Container left(container.begin(), container.begin() + mid);
-	// 	Container right(container.begin() + mid, container.end());
+	// Sort for Main and Pend
+	void sortForMainPend() {
+		auto	itInsert	= std::next(_nbrs.begin(), 1);
+		auto	itErase		= std::next(_nbrs.begin(), 2);
 
-	// 	sortFJMergeInsertion(left);
-	// 	sortFJMergeInsertion(right);
+		for (size_t i = 2; i < _size - 1; i += 2) {
+			int value = *itErase;
+			size_t posIndex = std::distance(_nbrs.begin(), itErase);
+			_nbrs.erase(itErase);
+			itInsert = _nbrs.insert(itInsert, value);
+			itErase = std::next(_nbrs.begin(), posIndex);
+			itInsert = std::next(itInsert);
+			itErase = std::next(itErase, 2);
+		}
+	}
 
-	// 	auto itLeft = left.begin();
-	// 	auto itRight = right.begin();
-	// 	auto itDest = container.begin();
+	// Returns the Jacobsthal number for the given index
+	size_t getJacobsthal(size_t indexJT) {
+		if (indexJT == 0)
+			return 0;
+		if (indexJT == 1)
+			return 1;
+		return ((2 * getJacobsthal(indexJT - 2)) + getJacobsthal(indexJT - 1));
+	}
 
-	// 	while (itLeft != left.end() && itRight != right.end()) {
-	// 		std::cout << BRIGHT_MAGENTA;
-	// 		printContainer(left);
-	// 		std::cout << BRIGHT_BLUE << BOLD << "   | " << *itLeft << RESET << " : ";
-	// 		std::cout << BRIGHT_GREEN << BOLD << *itRight << " |   " << RESET << BRIGHT_RED ;
-	// 		printContainer(right);
-	// 		std::cout << RESET << std::endl;
-	// 		comparison++;
-	// 		if (*itLeft <= *itRight) {
-	// 			*itDest = *itLeft;
-	// 			*itLeft++;
-	// 		} else {
-	// 			*itDest = *itRight;
-	// 			*itRight++;
-	// 		}
-	// 		*itDest++;
-	// 		// std::cout << BRIGHT_MAGENTA;
-	// 		// printContainer(left);
-	// 		// std::cout << BRIGHT_BLUE << BOLD << "   | " << *itLeft << RESET << " : ";
-	// 		// std::cout << BRIGHT_GREEN << BOLD << *itRight << " |   " << RESET << BRIGHT_RED ;
-	// 		// printContainer(right);
-	// 		// std::cout << RESET << std::endl;
-	// 	}
-	// 	std::cout << "----------------------------------------------" << std::endl;
-	// 	while (itLeft != left.end()) {
-	// 		*itDest = *itLeft;
-	// 		*itLeft++;
-	// 		*itDest++;
-	// 	}
-	// 	while (itRight != right.end()) {
-	// 		*itDest = *itRight;
-	// 		*itRight++;
-	// 		*itDest++;
-	// 	}
-	// 	_regLevel--;
-	// }
+	void binaryInsert(T::iterator itPend, size_t start, size_t end) {
+		if (start >= end) {
+			auto	itInsert = std::next(_nbrs.begin(), start);
+			int value = *itPend;
+			_nbrs.erase(itPend);
+			_nbrs.insert(itInsert, value);
+			return;
+		}
+		size_t mid = start + (end - start) / 2;
+
+		comparison++;
+		if (*(std::next(_nbrs.begin(), mid)) > *itPend) {
+			binaryInsert(itPend, start, mid);
+		} else {
+			binaryInsert(itPend, mid + 1, end);
+		}
+	}
+
+	// Inserts the Pend elements into the main vector
+	void insertPendElements() {
+		auto	itErase		= std::next(_nbrs.begin(), _size / 2);
+		auto	itInsert	= _nbrs.begin();
+
+		int		value		= *itErase;
+		size_t	posIndex	= std::distance(_nbrs.begin(), itErase);
+		_nbrs.erase(itErase);
+		itInsert = _nbrs.insert(itInsert, value);
+		itErase = std::next(_nbrs.begin(), posIndex);
+		
+		size_t	i			= 1;
+		size_t	sizePend	= _size / 2 + _size % 2;
+		for (size_t indexJT = 3; i < sizePend; indexJT++) {
+			size_t	endJT = getJacobsthal(indexJT - 1);
+			for (size_t j = std::min(getJacobsthal(indexJT), sizePend); j > endJT; endJT++) {
+				auto	itPend = std::next(_nbrs.begin(), _size / 2);
+				std::advance(itPend, j - 1);
+				binaryInsert(itPend, 0, (_size / 2) + i);
+				i++;
+			}
+		}
+	}
 };
 
 
