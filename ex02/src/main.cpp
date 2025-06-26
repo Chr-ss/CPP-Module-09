@@ -6,7 +6,7 @@
 /*   By: crasche <crasche@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/07 16:36:52 by crasche       #+#    #+#                 */
-/*   Updated: 2025/06/25 19:47:28 by christian.r   ########   odam.nl         */
+/*   Updated: 2025/06/26 13:52:51 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ int main(int argc, char **argv)
 	}
 	// Print before sorting
 	std::cout << "Before: ";
-	for (int i = 1; i < argc; ++i)
+	for (int i = 1; i < argc; ++i) {
+		if (i == 10) {
+			std::cout << "[...] ";
+			break;
+		}
 		std::cout << argv[i] << " ";
+	}
 	std::cout << std::endl;
 
 	// START: Vector sorting
@@ -62,17 +67,19 @@ int main(int argc, char **argv)
 		std::cout << GREEN << BOLD;
 	else
 		std::cout << RED << BOLD;
-	std::cout << "After: ";		printContainer(vecPmergeMe.getNbrs(), false);	std::cout << RESET << std::endl;
+	double timeV = std::chrono::duration_cast<std::chrono::nanoseconds>(endV - startV).count();
+	std::cout << "After: ";		printContainer(vecPmergeMe.getNbrs(), true);	std::cout << RESET << std::endl;
 	std::cout << "Time to process a range of " << vecPmergeMe.getNbrs().size() << " elements with std::vector:\t"
-			  << std::chrono::duration_cast<std::chrono::microseconds>(endV - startV).count() << " us" << std::endl;
+			  << timeV / 10000 << " us" << std::endl;
 
 	// Prints after sorting
 	// if (std::is_sorted(listPmergeMe.getNbrs().begin(), listPmergeMe.getNbrs().end()))
 	// 	std::cout << GREEN << BOLD;
 	// else
 	// 	std::cout << RED << BOLD;
-	// std::cout << "After: ";		printContainer(listPmergeMe.getNbrs(), false);	std::cout << RESET << std::endl;
+	// std::cout << "After: ";		printContainer(listPmergeMe.getNbrs(), true);	std::cout << RESET << std::endl;
+	double timeL = std::chrono::duration_cast<std::chrono::nanoseconds>(endL - startL).count();
 	std::cout << "Time to process a range of " << listPmergeMe.getNbrs().size() << " elements with std::vector:\t"
-			  << std::chrono::duration_cast<std::chrono::microseconds>(endL - startL).count() << " us" << std::endl;
+			  << timeL / 10000 << " us" << std::endl;
 	return (0);
 }

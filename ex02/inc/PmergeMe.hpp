@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/25 19:48:07 by christian.r   ########   odam.nl         */
+/*   Updated: 2025/06/26 13:42:25 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ private:
 	}
 
 	// Inserts the next two elements into the sorted vector
-	void insertPair(T::iterator &itInsert, T::iterator &itErase) {
+	void insertPair(typename T::iterator &itInsert, typename T::iterator &itErase) {
 		itErase = std::next(itErase);
 		if (itInsert == itErase)
 			return ;
@@ -199,7 +199,7 @@ private:
 		return ((2 * getJacobsthal(indexJT - 2)) + getJacobsthal(indexJT - 1));
 	}
 
-	void binaryInsert(T::iterator itPend, size_t start, size_t end) {
+	void binaryInsert(typename T::iterator itPend, size_t start, size_t end) {
 		if (start >= end) {
 			auto	itInsert = std::next(_nbrs.begin(), start);
 			int value = *itPend;
@@ -225,7 +225,7 @@ private:
 		_nbrs.erase(itErase);
 		itInsert = _nbrs.insert(itInsert, value);
 		itErase = std::next(_nbrs.begin(), posIndex);
-		
+
 		size_t	i			= 1;
 		size_t	sizePend	= _size / 2 + _size % 2;
 		for (size_t indexJT = 3; i < sizePend; indexJT++) {
