@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/26 13:42:25 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/26 16:44:10 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ private:
 	void binaryInsert(typename T::iterator itPend, size_t start, size_t end) {
 		if (start >= end) {
 			auto	itInsert = std::next(_nbrs.begin(), start);
+			if (itPend == itInsert) {
+				return;
+			}
 			int value = *itPend;
 			_nbrs.erase(itPend);
 			_nbrs.insert(itInsert, value);

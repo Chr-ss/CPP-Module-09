@@ -6,7 +6,7 @@
 /*   By: crasche <crasche@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/07 16:36:52 by crasche       #+#    #+#                 */
-/*   Updated: 2025/06/26 13:52:51 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/26 16:44:26 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int main(int argc, char **argv)
 	auto endL = std::chrono::high_resolution_clock::now();
 	// END: List sorting
 
-	// Prints after sorting
+
+	// Prints Vec after sorting
 	if (std::is_sorted(vecPmergeMe.getNbrs().begin(), vecPmergeMe.getNbrs().end()))
 		std::cout << GREEN << BOLD;
 	else
@@ -72,14 +73,14 @@ int main(int argc, char **argv)
 	std::cout << "Time to process a range of " << vecPmergeMe.getNbrs().size() << " elements with std::vector:\t"
 			  << timeV / 10000 << " us" << std::endl;
 
-	// Prints after sorting
+	// Prints list after sorting
 	// if (std::is_sorted(listPmergeMe.getNbrs().begin(), listPmergeMe.getNbrs().end()))
 	// 	std::cout << GREEN << BOLD;
 	// else
 	// 	std::cout << RED << BOLD;
 	// std::cout << "After: ";		printContainer(listPmergeMe.getNbrs(), true);	std::cout << RESET << std::endl;
 	double timeL = std::chrono::duration_cast<std::chrono::nanoseconds>(endL - startL).count();
-	std::cout << "Time to process a range of " << listPmergeMe.getNbrs().size() << " elements with std::vector:\t"
+	std::cout << "Time to process a range of " << listPmergeMe.getNbrs().size() << " elements with std::list:\t"
 			  << timeL / 10000 << " us" << std::endl;
 	return (0);
 }
