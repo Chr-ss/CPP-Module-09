@@ -6,7 +6,7 @@
 /*   By: crasche <crasche@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/07 16:36:52 by crasche       #+#    #+#                 */
-/*   Updated: 2025/06/26 16:44:26 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/26 16:53:27 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 	// 	std::cout << RED << BOLD;
 	// std::cout << "After: ";		printContainer(listPmergeMe.getNbrs(), true);	std::cout << RESET << std::endl;
 	double timeL = std::chrono::duration_cast<std::chrono::nanoseconds>(endL - startL).count();
-	std::cout << "Time to process a range of " << listPmergeMe.getNbrs().size() << " elements with std::list:\t"
+	std::cout << "Time to process a range of " << listPmergeMe.getNbrs().size() << " elements with std::list:  \t"
 			  << timeL / 10000 << " us" << std::endl;
 	return (0);
 }
