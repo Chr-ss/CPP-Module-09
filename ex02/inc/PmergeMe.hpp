@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/27 14:14:01 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/27 14:38:53 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ public:
 	// Sorting method
 	void sortFJMergeInsertion() {
 		_size = _nbrs.size();
-		if (_size < 2) {
-			return ;
-		}
 		sortPairOfTwo();
 		mergeSortDevide(0, _size - 1);
 		sortForMainPend();
@@ -166,7 +163,7 @@ private:
 
 	// Revursivly divides the vector into smaller parts
 	void mergeSortDevide(size_t left, size_t right) {
-		if (right - 1 <= left)
+		if (!right || right - 1 <= left)
 			return ;
 
 		size_t mid = (right + left) / 2;
@@ -226,6 +223,9 @@ private:
 		auto	itErase		= std::next(_nbrs.begin(), _size / 2);
 		auto	itInsert	= _nbrs.begin();
 
+		if (itErase == itInsert) {
+			return ;
+		}
 		int		value		= *itErase;
 		size_t	posIndex	= std::distance(_nbrs.begin(), itErase);
 		_nbrs.erase(itErase);
