@@ -6,7 +6,7 @@
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/26 16:44:10 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/27 14:14:01 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ public:
 
 	// Sorting method
 	void sortFJMergeInsertion() {
+		_size = _nbrs.size();
+		if (_size < 2) {
+			return ;
+		}
 		sortPairOfTwo();
 		mergeSortDevide(0, _size - 1);
 		sortForMainPend();
@@ -109,7 +113,6 @@ private:
 
 	// Sorting first Pairs, 2 members per Pair only!
 	void sortPairOfTwo() {
-		_size = _nbrs.size();
 		auto	it = _nbrs.begin();
 		for (size_t i = 1; i < _size; i += 2) {
 			if (*it < *std::next(it))
